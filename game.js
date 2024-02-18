@@ -9,14 +9,18 @@ const a1=document.getElementById('a1');
 const a2=document.getElementById('a2');
 const a3=document.getElementById('a3');
 const a4=document.getElementById('a4');
+const audio_opening = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Trailer Short - Who Wants to Be a Millionaire_.mp3');
+const audio_game_start = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Lets Play - Who Wants to Be a Millionaire.mp3');
+const audio_lose = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Lose - Who Wants to Be a Millionaire.mp3');
+const audio_win = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Win - Who Wants to Be a Millionaire.mp3');
 let shuffle_questions , current_question_index ,money_counter=0 ,question_counter=0 ;
 
 document.addEventListener('DOMContentLoaded', () =>{
     const gameContainer = document.getElementById("game_container");
     original_container_color = getComputedStyle(gameContainer).backgroundColor;
 });
-
-
+audio_opening.currentTime = 0;
+audio_opening.play();
 start_buttom.addEventListener('click', start_playing)
 next_buttom.addEventListener('click' ,()=>{
     current_question_index++;
@@ -26,6 +30,9 @@ next_buttom.addEventListener('click' ,()=>{
 function start_playing()
 {
     reset_answer_button_colors()
+    audio_opening.pause();
+    audio_game_start.currentTime = 0;
+    audio_game_start.play();
     // answer_buttons_element.style.backgroundColor= 'natural';
     start_buttom.classList.add('hide');
     money_disply.classList.remove('hide');
@@ -40,11 +47,14 @@ function start_playing()
 
 function the_next_question()
 {
+    audio_win.pause();
    show_question(shuffle_questions[current_question_index])
 }
 
 function show_question(question)
 {
+    audio_game_start.currentTime = 0;
+    audio_game_start.play();
     reset_answer_button_colors()
     reset_container_color()
     question_element.innerText = question.question;
@@ -87,12 +97,17 @@ window.onload=()=>{
  
                      if(array[index].correct)
                      {
+                        audio_game_start.pause();
+                        audio_win.currentTime = 0;
+                        audio_win.play();
                          event.target.style.backgroundColor = 'green';
                          money_counter += 1000;
                          question_counter++;
                          money_disply.textContent = `total cash :${money_counter}` ;
                          if(question_counter === 6)
                          {
+                            audio_opening.currentTime = 0;
+                            audio_opening.play();
                              question_container_element.classList.add('hide')
                              next_buttom.classList.add('hide');
                              let element = document.getElementById("game_container");
@@ -117,6 +132,8 @@ window.onload=()=>{
                      }
                      else 
                      {
+                             audio_lose.currentTime = 0;
+                             audio_lose.play();
                              event.target.style.backgroundColor = 'red';
                              
                                  if(array[0].correct)
@@ -171,10 +188,13 @@ function game_over()
     money_counter = 0;
     question_counter=0;
     element.appendChild(msg) 
-    setTimeout(()=> {
 
+    setTimeout(()=> {
+        audio_lose.pause();
         start_buttom.classList.remove('hide');
         finish_the_game.classList.remove('hide');
+        audio_opening.currentTime = 0;
+        audio_opening.play();
         element.removeChild(msg)
         reset_container_color()
          }, 3000);  
