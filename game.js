@@ -11,7 +11,7 @@ const a3=document.getElementById('a3');
 const a4=document.getElementById('a4');
 let shuffle_questions , current_question_index ,money_counter=0 ,question_counter=0 ;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () =>{
     const gameContainer = document.getElementById("game_container");
     original_container_color = getComputedStyle(gameContainer).backgroundColor;
 });
