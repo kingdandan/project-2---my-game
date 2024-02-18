@@ -13,7 +13,13 @@ const audio_opening = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Trai
 const audio_game_start = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Lets Play - Who Wants to Be a Millionaire.mp3');
 const audio_lose = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Lose - Who Wants to Be a Millionaire.mp3');
 const audio_win = new Audio('C:/Users/danie/Desktop/project2/Backsounds/Win - Who Wants to Be a Millionaire.mp3');
+const timerDisplayElement = document.getElementById('timer_display');
+const questionTimerDuration = 30; // 30 seconds
+let timeLeft = questionTimerDuration / 1000; // Convert milliseconds to seconds
+let timerInterval; // Variable to store the interval ID
+
 let shuffle_questions , current_question_index ,money_counter=0 ,question_counter=0 ;
+
 
 document.addEventListener('DOMContentLoaded', () =>{
     const gameContainer = document.getElementById("game_container");
@@ -47,6 +53,7 @@ function start_playing()
 
 function the_next_question()
 {
+    timeLeft =30;
     audio_win.pause();
    show_question(shuffle_questions[current_question_index])
 }
@@ -55,6 +62,8 @@ function show_question(question)
 {
     audio_game_start.currentTime = 0;
     audio_game_start.play();
+    timerDisplayElement.classList.remove('hide');
+    startQuestionTimer(); // Call the function to start the timer
     reset_answer_button_colors()
     reset_container_color()
     question_element.innerText = question.question;
@@ -95,12 +104,13 @@ window.onload=()=>{
                          }
                      }
  
-                     if(array[index].correct)
+                     if(array[index].correct && timeLeft>0)
                      {
                         audio_game_start.pause();
                         audio_win.currentTime = 0;
                         audio_win.play();
                          event.target.style.backgroundColor = 'green';
+                         timerDisplayElement.classList.add('hide');
                          money_counter += 1000;
                          question_counter++;
                          money_disply.textContent = `total cash :${money_counter}` ;
@@ -181,6 +191,7 @@ function game_over()
 {
     money_disply.classList.add('hide');
     question_container_element.classList.add('hide')
+    timerDisplayElement.classList.add('hide');
     let element = document.getElementById("game_container");
     element.style.backgroundColor= "red" ;
     let msg = document.createElement('div')
@@ -211,6 +222,36 @@ function reset_answer_button_colors() {
 function reset_container_color() {
     const gameContainer = document.getElementById("game_container");
     gameContainer.style.backgroundColor = original_container_color; // Apply the original color
+}
+
+function updateTimerDisplay() {
+    // Display the time left in a designated element (e.g., with id="timer_display")
+    timerDisplayElement.textContent = `Time left: ${timeLeft} seconds`;
+}
+
+function timeIsUp() {
+    game_over();
+}
+
+
+function startQuestionTimer() {
+    // Display initial time left
+    updateTimerDisplay();
+
+    // Start the timer interval
+    timerInterval = setInterval(() => {
+        // Decrease time left by 1 second
+        timeLeft--;
+
+        // Update the timer display
+        updateTimerDisplay();
+
+        // Check if time is up
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval); // Stop the timer interval
+            timeIsUp(); // Call function when time is up
+        }
+    }, 1000); // Update every second
 }
 
 
