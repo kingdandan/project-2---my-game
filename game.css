@@ -1,0 +1,97 @@
+.headline{ 
+    background-size: cover;
+    text-align: center; 
+    height: 50vh;
+    width: 100%;
+    font-size: 50px;
+    color : rgb(245, 237, 237);
+    font-weight: bold;
+}   
+body {
+   
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    background: url('https://img.mako.co.il/2020/07/16/mi_rotze_lihiot_millionaire_01_VOD_i.jpg');
+    background-blend-mode: darken;
+    background-size: contain; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-sizing: border-box; 
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-shadow: 0 0 20px rgb(109, 69, 69);
+    width: 100%;
+}
+.button_grid{
+        display: grid;
+        grid-template-columns: repeat(2,auto);
+        width: 100px;
+        height: 300px;
+        gap: 100px; 
+        justify-content: left;
+        margin: 100px 200px;
+       
+       
+}
+
+#question{
+    grid-area: first ;
+    text-align: center;
+    font-size: 30px;
+}
+:root{
+    --hue-natural:200;
+    
+}
+.answers{
+    width: 150px;
+    height: 40px; 
+    border-radius: 5px;
+    --hue: var(--hue-natural);
+    border: 1px solid hsl(var(--hue), 100%, 30%);
+    background-color: hsl(var(--hue), 100%, 50%);
+    color: rgb(24, 12, 12);
+         
+}
+.answers:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
+    opacity: 0.5;
+}
+
+.conteiner{
+    width: 800px;
+    max-width: 80%;
+    height: 80%;
+    background-color: rgb(162, 225, 235);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px;
+    justify-content: center;
+    opacity: 0.9;
+}
+.start_button , .next_button ,.finish_the_game
+{
+   font-size: 1.5rem; 
+   font-weight: bold;
+   padding:10px 20px;
+   
+}
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    gap: 30px;
+
+}
+
+
+.hide{
+    display: none;
+}
+
+
+
